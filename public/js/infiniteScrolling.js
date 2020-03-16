@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', evt =>{
     window.scrollTo(0, 0);
-    console.log(location.hostname);
 
 
     let btnNewPost = document.querySelector('#new-post-button')

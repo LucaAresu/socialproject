@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,12 +63,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(LikePost::class);
     }
 
     public function getAvatarAttribute()
@@ -75,5 +83,9 @@ class User extends Authenticatable
         if($this->avatar_path)
             return 'storage/'.$this->avatar_path;
         return env('DEFAULT_AVATAR_PATH');
+    }
+    public function hasLikedPost(Post $post)
+    {
+        return $this->likes()->where('post_id', $post->id)->where('user_id', Auth::user()->id)->count();
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.template')
 @section('content')
-    @component('components.createPost')
+    @component('components.createPost',compact('post'))
     @endcomponent
 @endsection

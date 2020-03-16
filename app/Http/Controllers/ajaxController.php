@@ -41,6 +41,7 @@ class ajaxController extends Controller
     }
 
     public function getFormCrea(){
-        return view('components.createPost');
+        $post = new Post();
+        return view('components.createPost',compact('post'));
     }
 }

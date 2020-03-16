@@ -37,7 +37,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $post = new Post();
+        return view('post.create', compact('post'));
     }
 
     /**

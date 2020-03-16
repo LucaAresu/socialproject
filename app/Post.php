@@ -30,6 +30,11 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(LikePost::class);
+    }
+
     public function getCommentiInOrdineTemporale() {
 
         return $this->comments()->orderBy('created_at', 'desc')->take(env('COMMENTS_PER_PAGE'))->get();
@@ -45,5 +50,9 @@ class Post extends Model
         if($this->image_path)
             return true;
         return false;
+    }
+    public function likesCount()
+    {
+        return $this->likes()->count();
     }
 }

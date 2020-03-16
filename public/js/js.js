@@ -115,3 +115,41 @@ function invioForm() {
         console.log(err);
     });
 }
+function like(bottone, id) {
+    let invertiBottone = () => {
+        let i = bottone.querySelector('i');
+        i.classList.toggle('far');
+        i.classList.toggle('fas');
+        let numlikes = bottone.parentElement.parentElement.parentElement.parentElement.querySelector('.numlikes');
+        numlikes.innerHTML = numlikes.innerHTML.replace('likes','').trim();
+        finale === 'mettiLike' ? numlikes.innerHTML++ : numlikes.innerHTML--;
+        numlikes.innerHTML+=' likes';
+    };
+    let i = bottone.querySelector('i');
+    let finale = i.classList.contains('far') ? 'mettiLike': 'togliLike';
+    let headers = new Headers(configHeaders);
+    let init = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(
+            {
+                'postid': id,
+                '_token': window.laravel.csrf,
+            }
+        )
+    };
+        let request = new Request(window.laravel.basePath+'/json/post/'+finale,init);
+        fetch(request).then(resp => {
+            if(resp.ok)
+                return resp.json();
+            throw new Error('errore');
+        }).then(resp =>{
+            if(resp)
+                invertiBottone();
+            else throw new Error('boh');
+        }).catch(err =>{
+            console.log(err);
+        });
+
+}
+
