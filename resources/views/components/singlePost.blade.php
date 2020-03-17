@@ -40,13 +40,13 @@
 
     <p>{{$post->contenuto}}</p>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-4">
             <p class="font-weight-light text-monospace font-italic"> {{$post->comments->count()}} commenti</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-4">
             <p class="text-center numlikes">{{$post->likesCount()}} likes</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-4">
             <p class="text-right">{{$post->quantoTempoFa()}}</p>
         </div>
     </div>

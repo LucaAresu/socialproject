@@ -35,7 +35,8 @@ class Post extends Model
         return $this->hasMany(LikePost::class);
     }
 
-    public function getCommentiInOrdineTemporale() {
+    public function getCommentiInOrdineTemporale()
+    {
 
         return $this->comments()->orderBy('created_at', 'desc')->take(env('COMMENTS_PER_PAGE'))->get();
     }

@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(LikePost::class);
     }
 
+    public function votes()
+    {
+        return $this->hasMany(VoteComment::class);
+    }
+
     public function getAvatarAttribute()
     {
         if($this->avatar_path)
@@ -87,5 +92,28 @@ class User extends Authenticatable
     public function hasLikedPost(Post $post)
     {
         return $this->likes()->where('post_id', $post->id)->where('user_id', Auth::user()->id)->count();
+    }
+
+    public function hasVoted(Comment $com)
+    {
+        return VoteComment::where('user_id', $this->id)->where('comment_id', $com->id)->count();
+    }
+
+    public function hasUpvoted(Comment $com)
+    {
+        $ret = false;
+        if($this->hasVoted($com)) {
+            $ret = VoteComment::where('user_id', $this->id)->where('comment_id', $com->id)->first()->voto;
+        }
+        return $ret;
+    }
+
+    public function hasDownvoted(Comment $com)
+    {
+        $ret = false;
+        if($this->hasVoted($com)) {
+            $ret = !(VoteComment::where('user_id', $this->id)->where('comment_id', $com->id)->first()->voto);
+        }
+        return $ret;
     }
 }

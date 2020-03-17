@@ -153,3 +153,57 @@ function like(bottone, id) {
 
 }
 
+function vote(trigger) {
+    let param = trigger.id.split('-');
+    let modo = param[0];
+    let commentId = param[1];
+    let differenza = 0;
+    let gestisciFreccie = () => {
+        let cambiaSomma = n => {
+            let div = document.querySelector('#punti-'+commentId);
+            console.log(div);
+            let nvoti = parseInt(div.innerHTML);
+            nvoti = modo === 'up' ? nvoti+=n : nvoti-=n;
+            div.innerHTML = nvoti+' punti';
+
+        };
+        let coloreTesto = param[0] === 'up' ? 'text-primary' : 'text-danger';
+        let altroModo = modo === 'up' ? 'down' : 'up';
+        let altroDiv = trigger.parentElement.querySelector('#' + altroModo + '-' + commentId);
+        if (trigger.classList.contains('votato')){
+            trigger.classList.remove('votato', 'text-primary', 'text-danger');
+            differenza--;
+        }
+        else {
+            if(altroDiv.classList.contains('votato')) {
+                altroDiv.classList.remove('votato', 'text-primary', 'text-danger');
+                differenza++;
+            }
+            trigger.classList.add('votato', coloreTesto);
+            differenza++;
+        }
+        cambiaSomma(differenza);
+    }
+
+    let headers = new Headers(configHeaders);
+    let init = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            '_token': window.laravel.csrf,
+            'commentId': commentId,
+            'modo': param[0] === 'up',
+
+        })
+    }
+    let request = new Request(window.laravel.basePath+'/json/vote/handle', init)
+    fetch(request).then(resp => {
+        if(resp.ok)
+            return resp.text();
+    }).then(resp =>
+    {
+        if (resp)
+            gestisciFreccie();
+    }).catch();
+}
+

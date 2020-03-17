@@ -11,3 +11,5 @@ Route::get('getCrea', 'ajaxController@getFormCrea');
 
 Route::post('post/mettiLike','LikePostController@store');
 Route::post('post/togliLike','LikePostController@destroy');
+
+Route::post('vote/handle', 'VoteCommentController@handle');

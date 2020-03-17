@@ -24,6 +24,24 @@ class Comment extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+    public function votes()
+    {
+        return $this->hasMany(VoteComment::class);
+    }
+    public function getUpvotesnumberAttribute()
+    {
+        return VoteComment::where('comment_id',$this->id)->where('voto', true)->count();
+    }
+    public function getDownvotesnumberAttribute()
+    {
+        return VoteComment::where('comment_id',$this->id)->where('voto', false)->count();
+    }
+
+
+    public function getPuntiAttribute()
+    {
+        return $this->upvotesnumber - $this->downvotesnumber;
+    }
 
 
 }
