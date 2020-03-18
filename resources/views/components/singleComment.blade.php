@@ -12,7 +12,7 @@
         </div>
     </div>
     <small class="d-block p-2 d-flex justify-content-between">
-        <div id="punti-{{$comment->id}}">{{$comment->punti}} punti </div>
+        <div id="punti-{{$comment->id}}" class="ml-4">{{$comment->punti}} punti </div>
 
         <div>{{$comment->quantoTempoFa()}}</div>
     </small>

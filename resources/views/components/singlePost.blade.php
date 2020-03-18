@@ -1,10 +1,14 @@
-<div class="border rounded p-2 mt-2 bg-white container-fluid containerPost" id="containerPost-{{$post->id}}">
-    <h1>
-            <a class="text-secondary" href="{{route('single_post',compact('post'))}}">
-                {{$post->titolo}}
-            </a>
+<div class="containerPost border rounded bg-white mb-2 mt-2" id="containerPost-{{$post->id}}">
+    <div class="row p-2 titolo">
+        <div class="col-11">
+            <h1>
+                <a class="text-secondary" href="{{route('single_post',compact('post'))}}">
+                    {{$post->titolo}}
+                </a>
+            </h1>
+        </div>
             @canany(['delete','update'],$post)
-                <div class="ml-1 float-right dropdown">
+                <div class="col-1 dropdown">
                     <span class="btn" id="dropdownMenuButton" data-toggle="dropdown" >
                         <i class="fas fa-ellipsis-h"></i>
                     </span>
@@ -23,23 +27,43 @@
                     </div>
                 </div>
             @endcanany
-    </h1>
-    <h6>By
-        <a href="{{route('user_post',['user' => $post->user])}}">
-            @component('components.avatar',['user' => $post->user])
-                {{$post->user->name}}
-            @endcomponent
-        </a>
-        <span class="float-right"> alle {{\Carbon\Carbon::parse($post->created_at)->format('H:i d/m/Y ')}}</span>
-    </h6>
+
+    </div>
+    <div class="informazioni row p-2">
+        <div class="col-4">
+            By
+            <a href="{{route('user_post',['user' => $post->user])}}">
+                @component('components.avatar',['user' => $post->user])
+                    {{$post->user->name}}
+                @endcomponent
+            </a>
+        </div>
+        <div class="col-4 text-center ">
+        @if(Auth::user() != $post->user)
+            @if(Auth::user()->isFollowing($post->user))
+                <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-success btn-block btn-sm">Seguito</button>
+                @else
+                <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-outline-success btn-block btn-sm">Segui</button>
+            @endif
+        @endif
+        </div>
+
+        <div class="col-4 text-right">
+            alle {{\Carbon\Carbon::parse($post->created_at)->format('H:i d/m/Y ')}}
+        </div>
+    </div>
     @if($post->hasImage())
+        <hr class="m-0">
+        <div class="container-fluid px-0">
+        <img class="img-fluid w-100" src="{{asset($post->image)}}">
+        </div>
 
-        <img class="img-fluid" src="{{asset($post->image)}}">
     @endif
-    <hr>
-
-    <p>{{$post->contenuto}}</p>
-    <div class="row">
+    <hr class="m-0">
+    <div class="contenuto bg-light pt-3 pb-2 pl-2">
+        <p>{{$post->contenuto}}</p>
+    </div>
+    <div class="row p-2">
         <div class="col-4">
             <p class="font-weight-light text-monospace font-italic"> {{$post->comments->count()}} commenti</p>
         </div>

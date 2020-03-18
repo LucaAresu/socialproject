@@ -207,3 +207,39 @@ function vote(trigger) {
     }).catch();
 }
 
+function follow(userId) {
+
+    let scambioBottoni = (bottone) => {
+        bottone.classList.toggle('btn-outline-success');
+        bottone.classList.toggle('btn-success');
+        bottone.innerHTML = bottone.innerHTML === 'Segui'? 'Seguito':'Segui';
+    };
+    let headers = new Headers(configHeaders);
+    let init = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            '_token': window.laravel.csrf,
+            'user': userId,
+        })
+    };
+    let request = new Request(window.laravel.basePath+'/json/follow',init);
+
+    fetch(request).then(resp => {
+        if(resp.ok)
+            return resp.text();
+        throw new Error('boh');
+    })
+    .then(resp =>{
+        if(resp){
+            document.querySelectorAll('.user-'+userId).forEach(ele => {
+                scambioBottoni(ele);
+            });
+        }
+        else
+            throw new Error('err');
+    }).catch(err =>{
+        console.log(err);
+    });
+}
+

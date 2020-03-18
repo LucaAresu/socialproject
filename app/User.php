@@ -83,6 +83,22 @@ class User extends Authenticatable
         return $this->hasMany(VoteComment::class);
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class,'follow','user_id', 'follower_id')->withTimestamps();
+    }
+
+    public function follows ()
+    {
+        return $this->belongsToMany(User::class, 'follow', 'follower_id', 'user_id')->withTimestamps();
+    }
+
+    public function isFollowing(User $user)
+    {
+
+        return $this->follows()->find($user)->count();
+    }
+
     public function getAvatarAttribute()
     {
         if($this->avatar_path)
@@ -116,4 +132,6 @@ class User extends Authenticatable
         }
         return $ret;
     }
+
+
 }
