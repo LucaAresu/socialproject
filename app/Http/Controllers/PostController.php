@@ -59,7 +59,7 @@ class PostController extends Controller
             ]);
         if($request->hasFile('postimg'))
             $this->salvaImmagine($post);
-        return redirect()->route('index');
+        return redirect()->route('user_post',['user' => Auth::user()]);
     }
 
 
@@ -107,7 +107,7 @@ class PostController extends Controller
             'titolo' => $request->titolo,
             'contenuto' => $request->contenuto,
         ]);
-        return redirect()->route('index');
+        return redirect()->route('user_post',['user' => Auth::user()]);
     }
 
     /**
@@ -120,13 +120,13 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
         $post->delete();
-        return redirect()->route('index');
+        return redirect()->route('user_post',['user' => Auth::user()]);
 
     }
 
     public function userPost(User $user) {
         $posts = $user->posts()->latest()->paginate(env('POSTS_PER_PAGE'));
-        return view('post.index', compact('posts'));
+        return view('post.userprofile', compact('posts'));
     }
 
     protected function validatePost() {

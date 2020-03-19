@@ -6,6 +6,8 @@ use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use function env;
+
 /**
  * App\User
  *
@@ -105,6 +107,12 @@ class User extends Authenticatable
             return 'storage/'.$this->avatar_path;
         return env('DEFAULT_AVATAR_PATH');
     }
+    public function getProfilepicAttribute()
+    {
+        if($this->avatar_path)
+            return 'storage/'.$this->profilepic_path;
+        return env('DEFAULT_PROFILEPIC_PATH');
+    }
     public function hasLikedPost(Post $post)
     {
         return $this->likes()->where('post_id', $post->id)->where('user_id', Auth::user()->id)->count();
@@ -131,6 +139,11 @@ class User extends Authenticatable
             $ret = !(VoteComment::where('user_id', $this->id)->where('comment_id', $com->id)->first()->voto);
         }
         return $ret;
+    }
+
+    public function getFollowIds()
+    {
+        return $this->follows()->pluck('id');;
     }
 
 

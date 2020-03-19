@@ -27,9 +27,16 @@ json_encode(['csrf' => csrf_token(),
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            @auth
             <li class="nav-item {{Route::currentRouteName() === 'index'? 'active' : ''}}">
                 <a class="nav-link" href="{{route('index')}}">Home</a>
             </li>
+            @endauth
+
+            <li class="nav-item {{Route::currentRouteName() === 'post_index'? 'active' : ''}}">
+                <a class="nav-link" href="{{route('post_index')}}">Discover</a>
+            </li>
+
             @auth
                 <li class="nav-item {{Route::currentRouteName() === 'create_post'? 'active' : ''}}">
                     <a class="nav-link" href="{{route('create_post')}}">Nuovo Post</a>
@@ -72,10 +79,11 @@ json_encode(['csrf' => csrf_token(),
 </nav>
 <div class="container mt-2">
     <div class="row justify-content-center">
+
+        @yield('sideContent')
+
         <div class="col-md-8">
             @yield('content')
-
-
         </div>
     </div>
 </div>

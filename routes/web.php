@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@index')->name('index');;
+Route::get('/', 'HomeController@index')->name('index');
 Route::get('post','PostController@index')->name('post_index');
 Auth::routes();
 
 Route::get('post/{post}', 'PostController@show')->name('single_post')->where('post', '[0-9]+');
-Route::get('post','PostController@index');
 
 Route::middleware('auth')->group(function() {
     Route::get('post/create','PostController@create')->name('create_post');
@@ -33,10 +32,12 @@ Route::middleware('auth')->group(function() {
     Route::get('user/{user}/settings','userController@impostazioni')->name('user_settings');
 });
 Route::get('user/{user}','PostController@userPost')->name('user_post');
+Route::get('user/{user}/follow','UserController@follow')->name('user_follow');
+Route::get('user/{user}/followers','UserController@followers')->name('user_followers');
 
 //impostazioni
 Route::middleware('auth')->group(function() {
 
     Route::get('user/{user}/settings','userController@impostazioni')->name('user_settings');
-    Route::post('user/{user}/settings','userController@cambioAvatar')->name('change_avatar');
+    Route::post('user/{user}/settings','userController@impostazioniHandler');
 });

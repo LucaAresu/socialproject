@@ -14,8 +14,9 @@ function caricaCommenti() {
     event.preventDefault();
     let visualizzaForm = () => {
         let margin = 'mt-3';
-        padre = document.querySelector('div#' + event.target.id);
-        form = document.createElement('form');
+        let id = event.target.id.replace('btncom-', '');
+        let padre = document.querySelector('#comment-' +id);
+        let form = document.createElement('form');
         form.id = 'form-'+event.target.id;
         form.method = 'POST';
         form.action = event.target.href;
@@ -51,7 +52,7 @@ function caricaCommenti() {
 
         let spazioCommenti = visualizzaForm();
 
-        let id = event.target.id.replace('comment-', '');
+        let id = event.target.id.replace('btncom-', '');
         let headers = new Headers(configHeaders);
         let init = {
             method: 'POST',

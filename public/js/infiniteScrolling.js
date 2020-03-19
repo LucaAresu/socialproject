@@ -45,6 +45,7 @@ document.addEventListener('scroll', event => {
                     'postId': lastPostId,
                     '_token': window.laravel.csrf,
                     'userId': userId,
+                    'modo': modo,
                 }),
             }
             let request = new Request(window.laravel.basePath+'/json/prossimaPagina', init);

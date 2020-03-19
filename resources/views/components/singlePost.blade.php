@@ -1,4 +1,4 @@
-<div class="containerPost border rounded bg-white mb-2 mt-2" id="containerPost-{{$post->id}}">
+<div class="containerPost border rounded bg-white mb-3 mt-2" id="containerPost-{{$post->id}}">
     <div class="row p-2 titolo">
         <div class="col-11">
             <h1>
@@ -39,13 +39,15 @@
             </a>
         </div>
         <div class="col-4 text-center ">
-        @if(Auth::user() != $post->user)
-            @if(Auth::user()->isFollowing($post->user))
-                <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-success btn-block btn-sm">Seguito</button>
-                @else
-                <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-outline-success btn-block btn-sm">Segui</button>
+        @auth
+            @if(Auth::user() != $post->user)
+                @if(Auth::user()->isFollowing($post->user))
+                    <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-success btn-block btn-sm">Seguito</button>
+                    @else
+                    <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-outline-success btn-block btn-sm">Segui</button>
+                @endif
             @endif
-        @endif
+        @endauth
         </div>
 
         <div class="col-4 text-right">
@@ -63,9 +65,10 @@
     <div class="contenuto bg-light pt-3 pb-2 pl-2">
         <p>{{$post->contenuto}}</p>
     </div>
-    <div class="row p-2">
+    <div class="row p-2 ">
         <div class="col-4">
-            <p class="font-weight-light text-monospace font-italic"> {{$post->comments->count()}} commenti</p>
+            <p class="font-weight-light text-monospace font-italic">
+                @auth <button class="btn btn-link" onclick="document.querySelector('#btncom-{{$post->id}}').click();"> @endauth{{$post->comments->count()}} commenti @auth </button> @endauth</p>
         </div>
         <div class="col-4">
             <p class="text-center numlikes">{{$post->likesCount()}} likes</p>

@@ -1,4 +1,8 @@
-<form method="post" action="{{route('create_post')}}" enctype="multipart/form-data" >
+<form method="post" action="
+@if(!Route::currentRouteName('edit_post'))
+{{route('create_post')}}
+    @endif
+    " enctype="multipart/form-data" >
     @csrf
     <div class="form-group">
 <!-- TODO: renderlo usabile pure per editare i post -->

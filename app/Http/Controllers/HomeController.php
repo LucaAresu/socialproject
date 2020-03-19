@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use Auth;
 use Illuminate\Http\Request;
+use function array_shift;
+use function compact;
 use function redirect;
 
 class HomeController extends Controller
@@ -24,7 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect()->route('index');
+        if(!Auth::check())
+            return redirect()->route('post_index');
+        $posts = Post::whereIn('user_id', Auth::user()->getFollowIds())->latest()->paginate(env('POSTS_PER_PAGE'));
+        return view('post.index', compact('posts'));
     }
 
 
