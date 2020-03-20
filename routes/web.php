@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function() {
     Route::post('post/{post}', 'CommentController@store');
 
     Route::get('user/{user}/settings','userController@impostazioni')->name('user_settings');
+    Route::get('user/{user}/notifications', 'userController@notifications')->name('user_notifications');
 });
 Route::get('user/{user}','PostController@userPost')->name('user_post');
 Route::get('user/{user}/follow','UserController@follow')->name('user_follow');

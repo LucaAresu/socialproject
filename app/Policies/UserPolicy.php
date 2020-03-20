@@ -96,4 +96,9 @@ class UserPolicy
     {
         return $user->is($padrone);
     }
+
+    public function seeNotifications(User $user, User $padrone)
+    {
+        return $user->is($padrone);
+    }
 }

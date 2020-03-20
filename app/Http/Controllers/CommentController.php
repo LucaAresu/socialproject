@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Notifications\NewCommentNotification;
 use App\Post;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use function compact;
@@ -47,6 +49,9 @@ class CommentController extends Controller
             'post_id' => $post->id,
             ]
         );
+        if($post->user->id != $comment->user->id)
+            $post->user->notify(new NewCommentNotification($post ,$comment));
+
         if($req->ajax())
             return view('components.singleComment', compact('comment') );
         return redirect()->route('single_post',compact('post'));

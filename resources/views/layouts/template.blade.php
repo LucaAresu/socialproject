@@ -48,6 +48,13 @@ json_encode(['csrf' => csrf_token(),
         </ul>
         <ul class="navbar-nav">
             @auth
+                <li class="nav-item {{Route::currentRouteName() === 'user_notifications'? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('user_notifications',['user' => Auth::user()])}}">Notifiche ({{Auth::user()->unreadNotifications()->count()}})</a>
+                </li>
+
+
+
+
                 <li class="nav-item dropdown">
 
                     <a class="nav-link dropdown-toggle" href="#" id="userInfo" role="button" data-toggle="dropdown">

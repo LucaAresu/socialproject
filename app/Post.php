@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use function env;
 
 
@@ -14,6 +15,7 @@ use function env;
  */
 class Post extends Model
 {
+    use SoftDeletes;
 
 
     protected $fillable = ['titolo', 'contenuto', 'user_id'];

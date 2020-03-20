@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Auth;
 use File;
 use Gate;
 use Illuminate\Http\Request;
@@ -147,5 +148,14 @@ class UserController extends Controller
             Image::make('storage/'.$user->avatar_path)->fit(env('AVATAR_WIDTH'), env('AVATAR_HEIGHT'))->encode()->save();
             Image::make('storage/'.$user->profilepic_path)->fit(env('PROFILEPIC_WIDTH'), env('PROFILEPIC_HEIGHT'))->encode()->save();
         }
+    }
+
+    public function notifications(User $user)
+    {
+        $this->authorize('seeNotifications', $user);
+
+        $notifications = $user->unreadNotifications;
+        $notifications->markAsRead();
+        return view('user.notifiche', compact('notifications'));
     }
 }

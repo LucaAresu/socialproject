@@ -63,7 +63,7 @@
     @endif
     <hr class="m-0">
     <div class="contenuto bg-light pt-3 pb-2 pl-2">
-        <p>{{$post->contenuto}}</p>
+        <p>{!!  nl2br( e ($post->contenuto)) !!}</p>
     </div>
     <div class="row p-2 ">
         <div class="col-4">
