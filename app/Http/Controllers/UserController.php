@@ -154,8 +154,9 @@ class UserController extends Controller
     {
         $this->authorize('seeNotifications', $user);
 
-        $notifications = $user->unreadNotifications;
-        $notifications->markAsRead();
-        return view('user.notifiche', compact('notifications'));
+        $unread = $user->unreadNotifications;
+        $read = $user->readNotifications()->take(env('NUMBER_OF_OLD_NOTIFICATIONS'))->get();
+        $unread->markAsRead();
+        return view('user.notifiche', compact(['read', 'unread']));
     }
 }
