@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Post;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use function compact;
@@ -69,5 +70,13 @@ class ajaxController extends Controller
     public function getFormCrea(){
         $post = new Post();
         return view('components.createPost',compact('post'));
+    }
+
+    public function cercaUtente(Request $req)
+    {
+        $users = User::where('name','like', '%'.$req->utente.'%')->take(env('RESULTS_PER_SEARCH'))->get();
+        if($users->count() === 0)
+            $users = [];
+        return view('components.search.search', compact('users'));
     }
 }

@@ -243,4 +243,51 @@ function follow(userId) {
         console.log(err);
     });
 }
+document.addEventListener('DOMContentLoaded', ev =>{
+    let ricercaOccupata = false;
+    let cancellaDiv = () => {
+        let div = document.querySelector('#risultatiRicerca');
+        if(div)
+            div.parentElement.removeChild(div);
+    };
+    let creaDivRicerca = content => {
+      let div = document.createElement('div');
+      div.id = 'risultatiRicerca';
+      div.innerHTML = content;
+      div.classList = 'border';
+      div.style.position = 'absolute';
+      document.querySelector('#divCercaUtente').appendChild(div);
 
+    };
+    document.querySelector('#inputCercaUtente').value='';
+
+    document.querySelector('#inputCercaUtente').addEventListener('input', evt =>{
+       if(evt.target.value.length > 3 && !ricercaOccupata) {
+           ricercaOccupata = true;
+           cancellaDiv();
+           let headers = new Headers(configHeaders);
+           let init = {
+               method: 'POST',
+               headers: headers,
+               body: JSON.stringify({
+                   '_token': window.laravel.csrf,
+                   'utente': evt.target.value,
+               })
+           };
+           let request = new Request(window.laravel.basePath+'/json/cercaUtente',init);
+           fetch(request).then(resp => {
+                if(resp.ok)
+                    return resp.text();
+                throw new Error('boh');
+           }).then(resp => {
+               if(resp) {
+                   creaDivRicerca(resp);
+                   ricercaOccupata = false;
+               }
+           }).catch(err =>{
+           });
+       }else {
+            cancellaDiv();
+       }
+    });
+})

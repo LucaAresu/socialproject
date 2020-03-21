@@ -15,3 +15,5 @@ Route::post('post/togliLike','LikePostController@destroy');
 Route::post('vote/handle', 'VoteCommentController@handle');
 
 Route::post('follow', 'FollowController@handle');
+
+Route::post('cercaUtente','ajaxController@cercaUtente');

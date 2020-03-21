@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 
     <title>Jonnykorner - @yield('titolo')</title>
 
@@ -26,37 +27,37 @@ json_encode(['csrf' => csrf_token(),
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            @auth
-            <li class="nav-item {{Route::currentRouteName() === 'index'? 'active' : ''}}">
-                <a class="nav-link" href="{{route('index')}}">Home</a>
-            </li>
-            @endauth
-
-            <li class="nav-item {{Route::currentRouteName() === 'post_index'? 'active' : ''}}">
-                <a class="nav-link" href="{{route('post_index')}}">Discover</a>
-            </li>
-
-            @auth
-                <li class="nav-item {{Route::currentRouteName() === 'create_post'? 'active' : ''}}">
-                    <a class="nav-link" href="{{route('create_post')}}">Nuovo Post</a>
+            <ul class="navbar-nav mr-auto">
+                @auth
+                <li class="nav-item {{Route::currentRouteName() === 'index'? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('index')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
-            @endauth
+                @endauth
 
+                <li class="nav-item {{Route::currentRouteName() === 'post_index'? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('post_index')}}">Discover <span class="sr-only">(current)</span></a>
+                </li>
 
-
-        </ul>
+                @auth
+                    <li class="nav-item {{Route::currentRouteName() === 'create_post'? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('create_post')}}">Nuovo Post <span class="sr-only">(current)</span></a>
+                    </li>
+                @endauth
+            </ul>
+        @auth
+            <div class="navbar-nav mr-auto" style="min-width: 25rem;">
+                <div id="divCercaUtente" class="w-100" style="position:relative;">
+                    <input class="form-control" type="search" placeholder="Cerca un utente..." id="inputCercaUtente">
+                </div>
+            </div>
+        @endauth
         <ul class="navbar-nav">
             @auth
                 <li class="nav-item {{Route::currentRouteName() === 'user_notifications'? 'active' : ''}}">
                     <a class="nav-link" href="{{route('user_notifications',['user' => Auth::user()])}}">Notifiche ({{Auth::user()->unreadNotifications()->count()}})</a>
                 </li>
 
-
-
-
                 <li class="nav-item dropdown">
-
                     <a class="nav-link dropdown-toggle" href="#" id="userInfo" role="button" data-toggle="dropdown">
                         @component('components.avatar',['user' =>Auth::user()])
                             {{Auth::getUser()->name}}
@@ -77,6 +78,7 @@ json_encode(['csrf' => csrf_token(),
                         @csrf
                     </form>
                 </li>
+
             @else
                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrati</a> </li>
