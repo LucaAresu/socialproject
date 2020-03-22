@@ -7,7 +7,7 @@
         <button class="btn btn-primary btn-block" id="new-post-button">Crea Post</button>
 
         @if(Auth::user()->follows()->count() === 0 && Route::is('index'))
-            <h1>Esplora la sezione discover e inizia a seguire qualcuno, i loro contenuti saranno pubblicati qui!</h1>
+            <h3>Esplora la sezione discover e inizia a seguire qualcuno, i loro contenuti saranno visualizzati qui!</h3>
         @endif
     @endauth
     @component('components.showPosts', compact('posts'))

@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapJsonRoutes();
 
+        $this->mapAdminRoutes();
         //
     }
 
@@ -86,5 +87,12 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/json.php'));
+    }
+
+    protected function mapAdminRoutes() {
+        Route::prefix('admin')
+            ->middleware(['web', 'auth', 'verifyIsAdmin'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin.php'));
     }
 }

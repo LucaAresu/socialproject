@@ -16,6 +16,13 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
+    public function before(User $user) {
+
+        if($user->isAdmin()){
+            return true;
+        }
+
+    }
     public function viewAny(User $user)
     {
         //

@@ -146,5 +146,9 @@ class User extends Authenticatable
         return $this->follows()->pluck('id');;
     }
 
+    public function isAdmin() {
+        return $this->role === 'admin';
+    }
+
 
 }

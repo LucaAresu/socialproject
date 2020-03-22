@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 
-    <title>Jonnykorner - @yield('titolo')</title>
+    <title>Jonnykorner - Pannello Admin </title>
 
     <script>window.laravel = {!!
 json_encode(['csrf' => csrf_token(),
@@ -19,10 +19,9 @@ json_encode(['csrf' => csrf_token(),
 
     <script src="https://kit.fontawesome.com/78c802cb57.js" crossorigin="anonymous"></script>
 </head>
-<body>
-@component('layouts.navbar')
+<body class="bg-dark text-light">
+@component('admin.template.navbar')
 @endcomponent
-
 <div class="container mt-2">
     <div class="row justify-content-center">
 
