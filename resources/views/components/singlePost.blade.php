@@ -68,7 +68,7 @@
     <div class="row p-2 ">
         <div class="col-4">
             <p class="font-weight-light text-monospace font-italic">
-                @auth <button class="btn btn-link" onclick="document.querySelector('#btncom-{{$post->id}}').click();"> @endauth{{$post->comments->count()}} commenti @auth </button> @endauth</p>
+                @auth <button class="btn btn-link" onclick="document.querySelector('#btncom-{{$post->id}}').click();"> @endauth{{$post->comments()->withTrashed()->count()}} commenti @auth </button> @endauth</p>
         </div>
         <div class="col-4">
             <p class="text-center numlikes">{{$post->likesCount()}} likes</p>

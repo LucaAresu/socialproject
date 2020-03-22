@@ -4,6 +4,8 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * App\Comment
  *
@@ -11,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = ['contenuto', 'user_id', 'post_id'];
     public function quantoTempoFa() {
         Carbon::setLocale('it');

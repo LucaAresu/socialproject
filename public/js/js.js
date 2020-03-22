@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', ev =>{
     document.querySelector('#inputCercaUtente').value='';
 
     document.querySelector('#inputCercaUtente').addEventListener('input', evt =>{
-       if(evt.target.value.length > 3 && !ricercaOccupata) {
+       if(evt.target.value.length > 2 && !ricercaOccupata) {
            ricercaOccupata = true;
            cancellaDiv();
            let headers = new Headers(configHeaders);
@@ -290,4 +290,33 @@ document.addEventListener('DOMContentLoaded', ev =>{
             cancellaDiv();
        }
     });
-})
+});
+function eliminaCommento(commentId) {
+    let conf = window.confirm('Vuoi eliminare questo commento?');
+    if(conf) {
+        let sostituisciCommento = () => {
+            document.querySelector('#com-'+commentId).querySelector('.com-contenuto').innerHTML= '[COMMENTO CANCELLATO]'
+        }
+        let headers = new Headers(configHeaders);
+        let init = {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+             '_token': window.laravel.csrf,
+             'commentId': commentId,
+          }),
+        };
+        let request = new Request('json/eliminaCommento',init);
+        fetch(request).then(resp => {
+            if(resp.ok)
+                return resp.text();
+        }).then( resp => {
+            if (resp)
+                sostituisciCommento();
+        }).catch();
+    }
+}
+
+function reportComment(commentId) {
+    alert('ancora non funziona');
+}

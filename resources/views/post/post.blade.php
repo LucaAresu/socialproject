@@ -23,7 +23,7 @@
                 </form>
             @endauth
 
-            @if($post->comments->count() > 0)
+            @if($post->comments()->withTrashed()->count() > 0)
                 <div class="mt-3 ">
                     @component('components.showComments',['comments' => $post->getCommentiInOrdineTemporale()])
                     @endcomponent

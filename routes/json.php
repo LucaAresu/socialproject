@@ -17,3 +17,5 @@ Route::post('vote/handle', 'VoteCommentController@handle');
 Route::post('follow', 'FollowController@handle');
 
 Route::post('cercaUtente','ajaxController@cercaUtente');
+
+Route::post('eliminaCommento', 'ajaxController@deleteComment');

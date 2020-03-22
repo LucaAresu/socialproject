@@ -79,4 +79,10 @@ class ajaxController extends Controller
             $users = [];
         return view('components.search.search', compact('users'));
     }
+
+    public function deleteComment(Request $req)
+    {
+        Comment::find($req->commentId)->delete();
+            return 1;
+    }
 }
