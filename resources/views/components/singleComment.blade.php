@@ -8,26 +8,34 @@
                         {{$comment->user->name}}
                     @endcomponent
                 </a>:
-            @if($comment->deleted_at)
-                [COMMENTO CANCELLATO]
+            <p class="com-contenuto d-inline">
+            @if($comment->trashed())
+
+                    <u class="font-italic">[COMMENTO CANCELLATO]</u>
+                @if(Auth::user()->isAdmin())
+                        {{$comment->contenuto}}
+                @endif
             @else
-                <p class="com-contenuto d-inline">{{$comment->contenuto}}</p>
+                {{$comment->contenuto}}
             @endif
+                </p>
         </div>
+        @if(!$comment->trashed())
+            <div class="dropdown">
+                <span class="btn" id="dropdownMenuButton" data-toggle="dropdown" >
+                    <i class="fas fa-ellipsis-h"></i>
+                </span>
+                <div class="dropdown-menu">
 
-        <div class="dropdown">
-            <span class="btn" id="dropdownMenuButton" data-toggle="dropdown" >
-                <i class="fas fa-ellipsis-h"></i>
-            </span>
-            <div class="dropdown-menu">
-                @can('delete',$comment)
-                <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="eliminaCommento({{$comment->id}})">Elimina</a>
-                @else
-                <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="reportComment({{$comment->id}})">Segnala</a>
-                @endcan
+                        @can('delete',$comment)
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="eliminaCommento({{$comment->id}})">Elimina</a>
+                        @else
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="reportComment({{$comment->id}})">Segnala</a>
+                        @endcan
+
+                </div>
             </div>
-        </div>
-
+        @endif
     </div>
     <small class="d-block p-2 d-flex justify-content-between">
         <div id="punti-{{$comment->id}}" class="ml-4">{{$comment->punti}} punti </div>
