@@ -317,6 +317,27 @@ function eliminaCommento(commentId) {
     }
 }
 
-function reportComment(commentId) {
-    alert('ancora non funziona');
+function report(reportable, reportableId) {
+
+    let conf = window.confirm('Vuoi davvero segnalare?');
+    if(conf) {
+        let headers = new Headers(configHeaders);
+        let init = {
+          method : 'POST',
+          headers : headers,
+          body: JSON.stringify({
+              '_token': window.laravel.csrf,
+              'reportable': reportable,
+              'reportableId': reportableId,
+          })
+        };
+        let request = new Request(window.laravel.basePath+'/json/report',init);
+        fetch(request).then(resp => {
+            if(resp.ok)
+                return resp.text();
+            }).then(resp => {
+                if(resp)
+                    alert('Grazie del report');
+        }).catch();
+    }
 }

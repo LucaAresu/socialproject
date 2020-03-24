@@ -7,27 +7,30 @@
                 </a>
             </h1>
         </div>
-            @canany(['delete','update'],$post)
+
                 <div class="col-1 dropdown">
                     <span class="btn" id="dropdownMenuButton" data-toggle="dropdown" >
                         <i class="fas fa-ellipsis-h"></i>
                     </span>
                     <div class="dropdown-menu">
+                    @canany(['delete','update'],$post)
                         @can('update', $post)
-                        <a class="dropdown-item" href="{{route('edit_post',compact('post'))}}">Modifica</a>
+                            <a class="dropdown-item" href="{{route('edit_post',compact('post'))}}">Modifica</a>
                         @endcan
-                        <div class="dropdown-divider"></div>
-                    @can('delete',$post)
-                        <form style="display: none;" action="{{route('destroy_post',compact('post'))}}" method="POST" id="form-{{$post->id}}">
+                            <div class="dropdown-divider"></div>
+                        @can('delete',$post)
+                            <form style="display: none;" action="{{route('destroy_post',compact('post'))}}" method="POST" id="form-{{$post->id}}">
                             @method('DELETE')
                             @csrf
-                        </form>
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="cancellaPost({{$post->id}})">Elimina</a>
-                    @endcan
+                            </form>
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="cancellaPost({{$post->id}})">Elimina</a>
+                        @endcan
+                    @else
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="report('Post',{{$post->id}})">Report</a>
+
+                        @endcanany
                     </div>
                 </div>
-            @endcanany
-
     </div>
     <div class="informazioni row p-2">
         <div class="col-4">

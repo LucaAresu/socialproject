@@ -30,7 +30,7 @@
                         @can('delete',$comment)
                         <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="eliminaCommento({{$comment->id}})">Elimina</a>
                         @else
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="reportComment({{$comment->id}})">Segnala</a>
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="report('Comment',{{$comment->id}})">Segnala</a>
                         @endcan
 
                 </div>

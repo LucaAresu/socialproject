@@ -85,4 +85,14 @@ class ajaxController extends Controller
         Comment::find($req->commentId)->delete();
             return 1;
     }
+
+    public function reports(Request $req) {
+        $req->reportable = 'App\\'.$req->reportable;
+        $reportable = $req->reportable::find($req->reportableId);
+        $reportable->reports()->firstOrCreate([
+            'reporter' => Auth::id(),
+            'reported' => $reportable->user->id,
+        ]);
+        return 1;
+    }
 }

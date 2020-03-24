@@ -94,6 +94,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follow', 'follower_id', 'user_id')->withTimestamps();
     }
+    public function reportsReceived()
+    {
+        return $this->hasMany(Report::class,'reported');
+    }
+    public function reportsDone()
+    {
+        return $this->hasMany(Report::class, 'reporter');
+    }
 
     public function isFollowing(User $user)
     {
@@ -149,6 +157,8 @@ class User extends Authenticatable
     public function isAdmin() {
         return $this->role === 'admin';
     }
+
+
 
 
 }

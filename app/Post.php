@@ -58,4 +58,9 @@ class Post extends Model
     {
         return $this->likes()->count();
     }
+
+    public function reports()
+    {
+        return $this->morphMany(Report::class, 'reportable');
+    }
 }

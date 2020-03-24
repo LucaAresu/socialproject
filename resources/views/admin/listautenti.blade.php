@@ -8,7 +8,8 @@
             <th>Email</th>
             <th>Numero Post</th>
             <th>Numero Commenti</th>
-            <th>Numero Segnalazioni</th>
+            <th>Segnalazioni Ricevute</th>
+            <th>Segnalazioni Fatte</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +19,8 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->posts()->count()}}</td>
                     <td>{{$user->comments()->count()}}</td>
-                    <td>0</td>
+                    <td>{{$user->reportsReceived()->count()}}</td>
+                    <td>{{$user->reportsDone()->count()}}</td>
                 </tr>
     @empty
         <td colspan="5">Non ci sono utenti</td>

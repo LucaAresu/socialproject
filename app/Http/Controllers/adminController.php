@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -14,7 +15,11 @@ class adminController extends Controller
 
     public function listaUtenti()
     {
-        $users = User::paginate(50);
+        $users = User::select(DB::raw('users.id, users.name, users.email, count(users.id) as aggregate'))
+            ->leftJoin('reports','users.id','=','reports.reported')
+            ->groupBy('users.id')
+            ->orderBy('aggregate', 'desc')
+            ->paginate(50);
         return view('admin.listautenti',compact('users'));
     }
 }

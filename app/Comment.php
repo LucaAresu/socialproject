@@ -48,5 +48,9 @@ class Comment extends Model
         return $this->upvotesnumber - $this->downvotesnumber;
     }
 
+    public function reports()
+    {
+        return $this->morphMany(Report::class, 'reportable');
+    }
 
 }
