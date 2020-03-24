@@ -19,7 +19,7 @@ json_encode(['csrf' => csrf_token(),
 
     <script src="https://kit.fontawesome.com/78c802cb57.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark text-light">
+<body>
 @component('admin.template.navbar')
 @endcomponent
 

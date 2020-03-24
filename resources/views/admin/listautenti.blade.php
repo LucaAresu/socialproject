@@ -19,7 +19,11 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->posts()->count()}}</td>
                     <td>{{$user->comments()->count()}}</td>
-                    <td>{{$user->reportsReceived()->count()}}</td>
+                    <td>
+                        <a href="{{route('admin_report_ricevuti',compact('user'))}}">
+                            {{$user->reportsReceived()->count()}}
+                        </a>
+                    </td>
                     <td>{{$user->reportsDone()->count()}}</td>
                 </tr>
     @empty

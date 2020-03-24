@@ -82,7 +82,9 @@ class ajaxController extends Controller
 
     public function deleteComment(Request $req)
     {
-        Comment::find($req->commentId)->delete();
+        $com = Comment::find($req->commentId);
+        $com->reports()->delete();
+        $com->delete();
             return 1;
     }
 

@@ -306,7 +306,7 @@ function eliminaCommento(commentId) {
              'commentId': commentId,
           }),
         };
-        let request = new Request('json/eliminaCommento',init);
+        let request = new Request(window.laravel.basePath+'/json/eliminaCommento',init);
         fetch(request).then(resp => {
             if(resp.ok)
                 return resp.text();

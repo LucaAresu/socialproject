@@ -118,9 +118,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $this->authorize('update', $post);
+        $this->authorize('delete', $post);
+        $post->reports()->delete();
         $post->delete();
-        return redirect()->route('user_post',['user' => Auth::user()]);
+        return back();
 
     }
 

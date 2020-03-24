@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Auth;
+use DB;
 use File;
 use Gate;
 use Illuminate\Http\Request;
@@ -158,5 +159,14 @@ class UserController extends Controller
         $read = $user->readNotifications()->take(env('NUMBER_OF_OLD_NOTIFICATIONS'))->get();
         $unread->markAsRead();
         return view('user.notifiche', compact(['read', 'unread']));
+    }
+
+    public function reportsReceived(User $user)
+    {
+        $reports = $user->reportsReceived()
+            ->select(DB::raw('reportable_type as tipo, reportable_id as id, count(reporter) as count'))
+            ->groupBy(['reportable_type','reportable_id'])
+            ->orderBy('count','desc')->get();
+        return view('admin.reportsReceived',compact(['reports','user']));
     }
 }
