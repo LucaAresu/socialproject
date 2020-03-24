@@ -22,15 +22,11 @@ json_encode(['csrf' => csrf_token(),
 <body class="bg-dark text-light">
 @component('admin.template.navbar')
 @endcomponent
-<div class="container mt-2">
-    <div class="row justify-content-center">
 
-        @yield('sideContent')
-
-        <div class="col-md-8">
+    <div class="container-fluid mt-3">
+        <div>
             @yield('content')
         </div>
-    </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

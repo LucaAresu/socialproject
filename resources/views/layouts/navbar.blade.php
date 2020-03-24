@@ -43,7 +43,12 @@
 
                     </a>
                     <div class="dropdown-menu" >
-                        <a class="dropdown-item" href="{{route('user_post',Auth::user())}}">Profilo</a>
+                        @if(Auth::user()->isAdmin())
+                            <a class="dropdown-item text-primary" href="{{route('admin_index')}}">Pannello Admin</a>
+                            <div class="dropdown-divider"></div>
+                        @endif
+
+                            <a class="dropdown-item" href="{{route('user_post',Auth::user())}}">Profilo</a>
                         <a class="dropdown-item" href="{{route('user_settings', Auth::user())}}">Impostazioni</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route('logout')}}"
