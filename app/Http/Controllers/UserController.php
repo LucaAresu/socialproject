@@ -169,4 +169,15 @@ class UserController extends Controller
             ->orderBy('count','desc')->get();
         return view('admin.reportsReceived',compact(['reports','user']));
     }
+
+    public function reportsDone(User $user)
+    {
+        $reports = $user->reportsDone()
+            ->select(DB::raw('users.name as name, users.id as id, count(users.name) as totali'))
+            ->join('users', 'reports.reported','=','users.id')
+            ->groupBy('reported')
+            ->orderBy('totali','desc')->get();
+
+        return view('admin.reportsDone', compact(['reports','user']));
+    }
 }

@@ -24,7 +24,11 @@
                             {{$user->reportsReceived()->count()}}
                         </a>
                     </td>
-                    <td>{{$user->reportsDone()->count()}}</td>
+                    <td>
+                        <a href="{{route('admin_report_fatti',compact('user'))}}">
+                            {{$user->reportsDone()->count()}}
+                        </a>
+                    </td>
                 </tr>
     @empty
         <td colspan="5">Non ci sono utenti</td>

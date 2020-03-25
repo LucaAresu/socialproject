@@ -7,7 +7,7 @@
                 </a>
             </h1>
         </div>
-
+            @auth
                 <div class="col-1 dropdown">
                     <span class="btn" id="dropdownMenuButton" data-toggle="dropdown" >
                         <i class="fas fa-ellipsis-h"></i>
@@ -31,6 +31,7 @@
                         @endcanany
                     </div>
                 </div>
+            @endauth
     </div>
     <div class="informazioni row p-2">
         <div class="col-4">
@@ -71,7 +72,7 @@
     <div class="row p-2 ">
         <div class="col-4">
             <p class="font-weight-light text-monospace font-italic">
-                @auth <button class="btn btn-link" onclick="document.querySelector('#btncom-{{$post->id}}').click();"> @endauth{{$post->comments()->withTrashed()->count()}} commenti @auth </button> @endauth</p>
+                @auth <button class="btn btn-link linkCommenti" onclick="document.querySelector('#btncom-{{$post->id}}').click();"> @endauth{{$post->comments()->withTrashed()->count()}} commenti @auth </button> @endauth</p>
         </div>
         <div class="col-4">
             <p class="text-center numlikes">{{$post->likesCount()}} likes</p>

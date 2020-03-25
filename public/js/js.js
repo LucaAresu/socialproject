@@ -259,37 +259,41 @@ document.addEventListener('DOMContentLoaded', ev =>{
       document.querySelector('#divCercaUtente').appendChild(div);
 
     };
-    document.querySelector('#inputCercaUtente').value='';
 
-    document.querySelector('#inputCercaUtente').addEventListener('input', evt =>{
-       if(evt.target.value.length > 2 && !ricercaOccupata) {
-           ricercaOccupata = true;
-           cancellaDiv();
-           let headers = new Headers(configHeaders);
-           let init = {
-               method: 'POST',
-               headers: headers,
-               body: JSON.stringify({
-                   '_token': window.laravel.csrf,
-                   'utente': evt.target.value,
-               })
-           };
-           let request = new Request(window.laravel.basePath+'/json/cercaUtente',init);
-           fetch(request).then(resp => {
-                if(resp.ok)
-                    return resp.text();
-                throw new Error('boh');
-           }).then(resp => {
-               if(resp) {
-                   creaDivRicerca(resp);
-                   ricercaOccupata = false;
-               }
-           }).catch(err =>{
-           });
-       }else {
-            cancellaDiv();
-       }
-    });
+    let inputRicerca = document.querySelector('#inputCercaUtente');
+    if(inputRicerca) {
+        inputRicerca.value = '';
+
+        document.querySelector('#inputCercaUtente').addEventListener('input', evt => {
+            if (evt.target.value.length > 2 && !ricercaOccupata) {
+                ricercaOccupata = true;
+                cancellaDiv();
+                let headers = new Headers(configHeaders);
+                let init = {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        '_token': window.laravel.csrf,
+                        'utente': evt.target.value,
+                    })
+                };
+                let request = new Request(window.laravel.basePath + '/json/cercaUtente', init);
+                fetch(request).then(resp => {
+                    if (resp.ok)
+                        return resp.text();
+                    throw new Error('boh');
+                }).then(resp => {
+                    if (resp) {
+                        creaDivRicerca(resp);
+                        ricercaOccupata = false;
+                    }
+                }).catch(err => {
+                });
+            } else {
+                cancellaDiv();
+            }
+        });
+    }
 });
 function eliminaCommento(commentId) {
     let conf = window.confirm('Vuoi eliminare questo commento?');

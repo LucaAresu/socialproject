@@ -28,6 +28,10 @@
                     @component('components.showComments',['comments' => $post->getCommentiInOrdineTemporale()])
                     @endcomponent
                 </div>
+                <script>
+                    if( link = document.querySelector('.linkCommenti'))
+                        link.disabled= true;
+                </script>
             @endif
         @endcomponent
 

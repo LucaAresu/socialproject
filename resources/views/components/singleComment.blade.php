@@ -1,7 +1,9 @@
 <div id="com-{{$comment->id}}" class="containerCommenti mt-2" >
     <div class=" d-flex flex-row">
-        @component('components.vote',compact('comment'))
-        @endcomponent
+        @auth
+            @component('components.vote',compact('comment'))
+            @endcomponent
+        @endauth
         <div class="bg-white border rounded p-2 pr-2">
                 <a href="{{route('user_post',['user' => $comment->user])}}">
                     @component('components.avatar',['user' =>$comment->user])
@@ -12,7 +14,8 @@
             @if($comment->trashed())
 
                     <u class="font-italic">[COMMENTO CANCELLATO]</u>
-                @if(Auth::user()->isAdmin())
+
+                @if(Auth::check() && Auth::user()->isAdmin())
                         {{$comment->contenuto}}
                 @endif
             @else
