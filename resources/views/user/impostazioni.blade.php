@@ -4,9 +4,16 @@
     @php
     $user = Auth::user();
     @endphp
-    @component('components.impostazioni.bio', compact('user'))
-    @endcomponent
-    @component('components.impostazioni.cambioavatar',compact('user'))
-    @endcomponent
+    <div class="bg-white border rounded p-2 d-flex flex-column justify-content-between">
+        <div>
+        @component('components.impostazioni.bio', compact('user'))
+        @endcomponent
+        </div>
+        <hr>
+        <div>
+        @component('components.impostazioni.cambioavatar',compact('user'))
+        @endcomponent
+        </div>
+    </div>
 @endsection
 

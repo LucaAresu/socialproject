@@ -6,7 +6,7 @@
     <input type="hidden" name="modo" value="avatar">
     @csrf
     <div class="form-group">
-        <input type="file" name="avatar" accept="image/x-png,image/jpeg" >
+        <input type="file"  class="form-control-file" name="avatar" accept="image/x-png,image/jpeg" >
     </div>
     <div class="form-group">
         <img src="{{asset($user->profilepic)}}"  id="avatar" height="300" width="300" alt="Image preview...">
@@ -14,6 +14,11 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Invia</button>
     </div>
+</form>
+<form method="POST">
+@csrf
+    <input type="hidden" name="modo" value="avatarDestroy">
+    <button type="submit" class="btn btn-danger">Elimina foto</button>
 </form>
 <script>
     function previewFile() {

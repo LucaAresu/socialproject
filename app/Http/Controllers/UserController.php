@@ -115,6 +115,9 @@ class UserController extends Controller
                 break;
             case 'bio':
                 $this->cambioBio($req, $user);
+                break;
+            case 'avatarDestroy':
+                $this->avatarDestroy($user);
         }
         return redirect()->route('user_post',compact('user'));
 
@@ -149,6 +152,12 @@ class UserController extends Controller
             Image::make('storage/'.$user->avatar_path)->fit(env('AVATAR_WIDTH'), env('AVATAR_HEIGHT'))->encode()->save();
             Image::make('storage/'.$user->profilepic_path)->fit(env('PROFILEPIC_WIDTH'), env('PROFILEPIC_HEIGHT'))->encode()->save();
         }
+    }
+    public function avatarDestroy(User $user)
+    {
+        $user->avatar_path = null;
+        $user->profilepic_path = null;
+        $user->save();
     }
 
     public function notifications(User $user)

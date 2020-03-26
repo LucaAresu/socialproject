@@ -43,15 +43,8 @@
             </a>
         </div>
         <div class="col-4 text-center ">
-        @auth
-            @if(Auth::user() != $post->user)
-                @if(Auth::user()->isFollowing($post->user))
-                    <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-success btn-block btn-sm">Seguito</button>
-                    @else
-                    <button onclick="follow({{$post->user->id}})" class="user-{{$post->user->id}} btn btn-outline-success btn-block btn-sm">Segui</button>
-                @endif
-            @endif
-        @endauth
+            @component('components.mini.followButton', ['user' => $post->user])
+            @endcomponent
         </div>
 
         <div class="col-4 text-right">

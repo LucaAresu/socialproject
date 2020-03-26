@@ -1,11 +1,13 @@
 
 <div class="card">
     <div class="card-header text-center">
-        @if(!Route::is('user_post',$user))
-            <h3><a href="{{route('user_post',$user)}}">{{$user->name}}</a></h3>
-        @else
-        <h3>{{$user->name}}</h3>
-        @endif
+        <h3>
+            @if(!Route::is('user_post',$user))
+                <a href="{{route('user_post',$user)}}">{{$user->name}}</a>
+            @else
+            {{$user->name}}
+            @endif
+        </h3>
     </div>
         <img src="{{asset($user->profilepic)}}" class="card-img-top">
 
@@ -17,6 +19,8 @@
                 Questo utente non ha scritto nessuna Bio.
             @endif
         </p>
+        @component('components.mini.followButton', compact('user'))
+        @endcomponent
         <hr>
         <p>
             @if($user->followers()->count())
