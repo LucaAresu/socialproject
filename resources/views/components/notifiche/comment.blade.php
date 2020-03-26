@@ -1,6 +1,6 @@
 @php
     $user = \App\User::find($notification->data['userId']);
-    $post = \App\Post::find($notification->data['postId']);
+    $post = \App\Post::withTrashed()->find($notification->data['postId']);
 @endphp
 <li>Nuovo commento da
     @component('components.user',compact('user'))

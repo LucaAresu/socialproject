@@ -40,7 +40,9 @@ class ajaxController extends Controller
                 $posts = $this->prossimaPaginaPostIndex($lastPost);
                 break;
         }
-        $posts = $posts->where('created_at','<', $lastPost->created_at)->latest()->take(env('POSTS_PER_PAGE'))->get();
+        $posts = $posts->where('created_at','<', $lastPost->created_at)
+            ->whereNotIn('user_id',User::onlyTrashed()->pluck('id'))
+            ->latest()->take(env('POSTS_PER_PAGE'))->get();
         return view('components.showPosts',compact('posts'));
     }
 
@@ -63,7 +65,11 @@ class ajaxController extends Controller
     public function prossimoCommento(Request $req)
     {
         $post = Comment::find($req->comId)->post;
-        $comments = $post->comments()->where('id','<', $req->comId)->latest()->take(env('COMMENTS_PER_PAGE'))->get();
+        $comments = $post->comments()
+            ->where('id','<', $req->comId)
+            ->whereNotIn('user_id',User::onlyTrashed()->pluck('id'))
+            ->latest()
+            ->take(env('COMMENTS_PER_PAGE'))->get();
         return view('components.showComments', compact('comments'));
     }
 

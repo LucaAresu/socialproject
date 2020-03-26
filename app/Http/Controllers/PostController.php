@@ -26,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(env('POSTS_PER_PAGE'));
+        $posts = Post::latest()->whereNotIn('user_id',User::onlyTrashed()->pluck('id'))->paginate(env('POSTS_PER_PAGE'));
         return view('post.index',compact('posts'));
     }
 

@@ -5,6 +5,7 @@
         <thead>
         <tr>
             <th>Nome</th>
+            <th>Ban</th>
             <th>Email</th>
             <th>Numero Post</th>
             <th>Numero Commenti</th>
@@ -14,8 +15,26 @@
         </thead>
         <tbody>
     @forelse($users as $user)
+        @php
+        $u = \App\User::withTrashed()->find($user->id);
+        @endphp
                 <tr>
                     <td><a href="{{route('user_post',compact('user'))}}">{{$user->name}}</a></td>
+
+                    <td>
+                        @if(!$u->isAdmin())
+                            <form action="{{route('admin_ban')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{$user->id}}">
+                                @if($u->trashed())
+                                    <button class="btn btn-primary">Restore</button>
+                                @else
+                                    <button class="btn btn-danger">Ban</button>
+                                @endif
+                            </form>
+                        @endif
+
+                    </td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->posts()->count()}}</td>
                     <td>{{$user->comments()->count()}}</td>

@@ -16,7 +16,7 @@ class adminController extends Controller
 
     public function listaUtenti()
     {
-        $users = User::select(DB::raw('users.id, users.name, users.email, count(users.id) as aggregate'))
+        $users = User::withTrashed()->select(DB::raw('users.id, users.name, users.email, count(users.id) as aggregate'))
             ->leftJoin('reports','users.id','=','reports.reported')
             ->groupBy('users.id')
             ->orderBy('aggregate', 'desc')
@@ -37,5 +37,19 @@ class adminController extends Controller
         $report = $namespace::withTrashed()->find($id);
         $report->reports()->delete();
         return redirect()->route('admin_index');
+    }
+
+    public function banOrRestore(Request $req)
+    {
+        $user = User::withTrashed()->find($req->id);
+        if(!$user->isAdmin()) {
+            if ($user->trashed())
+                $user->restore();
+            else {
+                event('auth.logout', [$user]);
+                $user->delete();
+            }
+        }
+        return back();
     }
 }

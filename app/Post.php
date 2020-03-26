@@ -40,7 +40,9 @@ class Post extends Model
     public function getCommentiInOrdineTemporale()
     {
 
-        return $this->comments()->withTrashed()->orderBy('created_at', 'desc')->take(env('COMMENTS_PER_PAGE'))->get();
+        return $this->comments()->withTrashed()
+            ->whereNotIn('user_id',User::onlyTrashed()->pluck('id'))
+            ->orderBy('created_at', 'desc')->take(env('COMMENTS_PER_PAGE'))->get();
     }
 
     public function getImageAttribute()
