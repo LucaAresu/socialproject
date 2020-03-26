@@ -64,9 +64,10 @@ class ajaxController extends Controller
 
     public function prossimoCommento(Request $req)
     {
-        $post = Comment::find($req->comId)->post;
+        $currentCom = Comment::find($req->comId);
+        $post = $currentCom->post;
         $comments = $post->comments()
-            ->where('id','<', $req->comId)
+            ->where('created_at','<', $currentCom->created_at)
             ->whereNotIn('user_id',User::onlyTrashed()->pluck('id'))
             ->latest()
             ->take(env('COMMENTS_PER_PAGE'))->get();

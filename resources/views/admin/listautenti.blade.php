@@ -6,6 +6,7 @@
         <tr>
             <th>Nome</th>
             <th>Ban</th>
+            <th>Impostazioni</th>
             <th>Email</th>
             <th>Numero Post</th>
             <th>Numero Commenti</th>
@@ -20,7 +21,6 @@
         @endphp
                 <tr>
                     <td><a href="{{route('user_post',compact('user'))}}">{{$user->name}}</a></td>
-
                     <td>
                         @if(!$u->isAdmin())
                             <form action="{{route('admin_ban')}}" method="POST">
@@ -33,8 +33,10 @@
                                 @endif
                             </form>
                         @endif
-
                     </td>
+
+                    <td><a href="{{route('user_settings',compact('user'))}}">Impostazioni</a></td>
+
                     <td>{{$user->email}}</td>
                     <td>{{$user->posts()->count()}}</td>
                     <td>{{$user->comments()->count()}}</td>

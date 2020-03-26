@@ -127,7 +127,7 @@ class PostController extends Controller
 
     public function userPost(User $user) {
         $posts = $user->posts()->latest()->paginate(env('POSTS_PER_PAGE'));
-        return view('post.userprofile', compact('posts'));
+        return view('post.userprofile', compact(['posts','user']));
     }
 
     protected function validatePost() {
